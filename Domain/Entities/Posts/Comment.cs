@@ -15,8 +15,8 @@ namespace Domain.Entities.Posts
         public string Content { get; set; } = string.Empty;
 
         [Column("AuthorId")]
-        public Guid UserId { get; set; }
-        public ApplicationUser User { get; set; } = null!;
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
 
         public int PostId { get; set; }
         public Post Post { get; set; } = null!;

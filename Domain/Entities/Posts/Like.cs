@@ -12,10 +12,10 @@ namespace Domain.Entities.Posts
     [Table("Likes")]
     public class Like: BaseEntity
     {
-        public  Guid UserId { get; set; }
-        public  ApplicationUser User { get; set; } = null!;
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
 
-        public  int PostId { get; set; }
-        public  Post Post { get; set; } = null!;
+        public int PostId { get; set; }
+        public Post Post { get; set; } = null!;
     }
 }

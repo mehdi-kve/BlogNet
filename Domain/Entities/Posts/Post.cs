@@ -19,7 +19,7 @@ namespace Domain.Entities.Posts
         public bool IsPublished { get; set; } = false;
 
         [Column("AuthorId")]
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
         public ApplicationUser User { get; set; }
 
         public int? PostCategoryId { get; set; }
