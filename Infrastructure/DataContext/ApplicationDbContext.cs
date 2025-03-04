@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,10 +24,21 @@ namespace Infrastructure.DataContext
         public DbSet<Like> Likes { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                if (typeof(BaseEntity).IsAssignableFrom(entityType.ClrType))
+                {
+                    var method = typeof(ApplicationDbContext)
+                        .GetMethod(nameof(SetGlobalQueryFilter), BindingFlags.NonPublic | BindingFlags.Static)
+                        ?.MakeGenericMethod(entityType.ClrType);
+
+                    method?.Invoke(null, new object[] { modelBuilder });
+                }
+            }
 
             modelBuilder.Entity<Post>()
                 .HasOne(p => p.User)
@@ -65,5 +77,26 @@ namespace Infrastructure.DataContext
                 .OnDelete(DeleteBehavior.Cascade);
 
         }
+
+        public override int SaveChanges()
+        {
+            foreach (var entry in ChangeTracker.Entries<BaseEntity>())
+            {
+                if (entry.State == EntityState.Deleted)
+                {
+                    entry.State = EntityState.Modified;
+                    entry.Entity.IsDeleted = true;
+                    entry.Entity.DeletedAt = DateTime.UtcNow;
+                }
+            }
+
+            return base.SaveChanges();
+        }
+
+        private static void SetGlobalQueryFilter<T>(ModelBuilder modelBuilder) where T : BaseEntity
+        {
+            modelBuilder.Entity<T>().HasQueryFilter(e => !e.IsDeleted);
+        }
+
     }
 }
