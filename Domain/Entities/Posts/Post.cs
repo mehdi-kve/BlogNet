@@ -14,9 +14,6 @@ namespace Domain.Entities.Posts
     {
         public string Title { get; set; } = string.Empty;
         public string Content { get; set; } = string.Empty;
-        public int LikesCount { get; set; }
-        public int CommentsCount { get; set; }
-        public bool IsPublished { get; set; } = false;
 
         [Column("AuthorId")]
         public string UserId { get; set; }
@@ -27,11 +24,5 @@ namespace Domain.Entities.Posts
 
         public ICollection<Like> Likes { get; set; } = new List<Like>();
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
-
-        public Post()
-        {
-            LikesCount = 0;
-            CommentsCount = 0;
-        }
     }
 }

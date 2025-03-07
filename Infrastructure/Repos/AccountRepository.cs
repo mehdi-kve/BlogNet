@@ -15,6 +15,8 @@ using Application.Extensions;
 using Infrastructure.DataContext;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using Azure.Core;
+using System.Globalization;
 
 namespace Infrastructure.Repos
 {
@@ -52,6 +54,7 @@ namespace Infrastructure.Repos
 
                 var userClaims = new[]
                 {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id),
                     new Claim(ClaimTypes.Name, user.Email),
                     new Claim(ClaimTypes.Email, user.Email),
                     new Claim(ClaimTypes.Role, (await userManager.GetRolesAsync(user)).FirstOrDefault().ToString()),
@@ -164,14 +167,15 @@ namespace Infrastructure.Repos
             if (existingRole != null)
                 return new GeneralResponse(false, "Role already exists");
 
-            var newRole = new IdentityRole { Name = model.Name };
+            var stdRoleName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.Name.ToLower());
+            var newRole = new IdentityRole { Name = stdRoleName };
             var result = await roleManager.CreateAsync(newRole);
             var response = CheckResponse(result);
 
             if (!string.IsNullOrEmpty(response))
                 return new GeneralResponse(false, response);
             else
-                return new GeneralResponse(true, "Role Changed");
+                return new GeneralResponse(true, "Role was created successfully");
 
         }
 

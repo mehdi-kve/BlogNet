@@ -2,6 +2,7 @@
 using Application.DTOs.Response;
 using Application.DTOs.Response.Account;
 using Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,6 +50,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("identify/role/create")]
         public async Task<ActionResult<GeneralResponse>> CreateRole(CreateRoleDTO model)
         {
@@ -62,6 +64,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("identify/role/list")]
         public async Task<ActionResult<IEnumerable<GetRoleDTO>>> GetRoles()
         {
@@ -78,12 +81,14 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("identify/users-with-roles")]
         public async Task<ActionResult<IEnumerable<GetUserWithRolesDTO>>> GetUserWithRoles()
         {
             return Ok(await account.GetUserWithRoleAsync());
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("identity/change-role")]
         public async Task<ActionResult<GeneralResponse>> ChangeUserRole(ChangeUserRoleRequestDTO model)
         {

@@ -28,6 +28,13 @@ namespace Infrastructure.DataContext
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<PostCategory>().HasData(
+            new PostCategory { Id = 1, Name = "Technology" },
+            new PostCategory { Id = 2, Name = "Science" },
+            new PostCategory { Id = 3, Name = "Business" },
+            new PostCategory { Id = 4, Name = "Health" }
+            );
+
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
                 if (typeof(BaseEntity).IsAssignableFrom(entityType.ClrType))

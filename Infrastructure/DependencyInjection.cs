@@ -2,6 +2,7 @@
 using Application.Interfaces;
 using Application.Interfaces.Persistence;
 using Domain.Entities.Authentication;
+using Domain.Repository;
 using Infrastructure.DataContext;
 using Infrastructure.Persistence;
 using Infrastructure.Repos;
@@ -26,9 +27,26 @@ namespace Infrastructure
                 .AddJwtAuthentication(configuration); 
             
             services.AddAuthentication();
-            services.AddAuthorization();
+            services.AddAuthorizationWithRole();
             services.AddScoped<IAccount, AccountRepository>();
+            services.AddScoped<IUserContextService, UserContextService>();
+            services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<IPostCategoryRepository, PostCategoryRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<ILikeRepository, LikeRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            return services;
+        }
+
+        public static IServiceCollection AddAuthorizationWithRole(this IServiceCollection services) 
+        {
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("RequireAuthorRole", policy => policy.RequireRole("Author"));
+                options.AddPolicy("RequireUserRole", policy => policy.RequireRole("User"));
+            });
+
             return services;
         }
 
@@ -56,6 +74,8 @@ namespace Infrastructure
 
             .AddJwtBearer(options =>
             {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
