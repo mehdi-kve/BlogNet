@@ -50,6 +50,6 @@ public class CreateLikeHandler : IRequestHandler<CreateLikeCommand, GeneralRespo
         await _likeRepository.AddAsync(like);
         await _unitOfWork.SaveChangesAsync();
 
-        return new GeneralResponse(true, $"Post {post.Id} was Liked successfully.");
+        return new GeneralResponse(true, $"Post ID: {post.Id} was Liked successfully.");
     }
 }

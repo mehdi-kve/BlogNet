@@ -46,6 +46,6 @@ public class CreateCommentHandler : IRequestHandler<CreateCommentCommand, Genera
         await _commentRepository.AddAsync(comment);
         await _unitOfWork.SaveChangesAsync();
 
-        return new GeneralResponse(true, $"Comment {comment.Id} was created successfully.");
+        return new GeneralResponse(true, $"Comment ID: {comment.Id} was created successfully.");
     }
 }

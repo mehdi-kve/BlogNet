@@ -36,6 +36,6 @@ public class DeleteCommentHandler : IRequestHandler<DeleteCommentCommand, Genera
         _commentRepository.SoftDelete(comment);
         await _unitOfWork.SaveChangesAsync();
 
-        return new GeneralResponse(true, $"Comment {comment.Id} was deleted successfully.");
+        return new GeneralResponse(true, $"Comment ID: {comment.Id} was deleted successfully.");
     }
 }

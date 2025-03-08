@@ -45,6 +45,6 @@ public class UpdatePostHandler : IRequestHandler<UpdatePostCommand, GeneralRespo
         _postRepository.Update(post);
         await _unitOfWork.SaveChangesAsync();
 
-        return new GeneralResponse(true, $"Post {post.Id} was updated successfully."); ;
+        return new GeneralResponse(true, $"Post ID: {post.Id} was updated successfully."); ;
     }
 }

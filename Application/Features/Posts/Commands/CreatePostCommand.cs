@@ -38,6 +38,6 @@ public class CreatePostHandler : IRequestHandler<CreatePostCommand, GeneralRespo
         await _postRepository.AddAsync(post);
         await _unitOfWork.SaveChangesAsync();
 
-        return new GeneralResponse(true, $"Post {post.Id} was created successfully.");
+        return new GeneralResponse(true, $"Post ID: {post.Id} was created successfully.");
     }
 }

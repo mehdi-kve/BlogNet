@@ -40,6 +40,6 @@ public class DeleteLikeHandler : IRequestHandler<DeleteLikeCommand, GeneralRespo
         _likeRepository.SoftDelete(userLike);
         await _unitOfWork.SaveChangesAsync();
 
-        return new GeneralResponse(true, $"You unlike post {post.Id} successfully.");
+        return new GeneralResponse(true, $"You unlike post ID: {post.Id} successfully.");
     }
 }

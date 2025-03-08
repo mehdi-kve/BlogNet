@@ -2,6 +2,7 @@
 using Application.DTOs.Response.Account;
 using Application.DTOs.Response.Comment;
 using Application.DTOs.Response.Like;
+using Application.DTOs.Response.PostCategory;
 using Application.DTOs.Response.Posts;
 using AutoMapper;
 using Domain.Entities.Posts;
@@ -27,6 +28,8 @@ namespace Application.Extensions
 
             CreateMap<Like, LikeDTO>()
                 .ForMember(dest => dest.LikedBy, opt => opt.MapFrom(src => src.User.Name));
+
+            CreateMap<PostCategory, PostCategoryDTO>();
         }
     }
 }

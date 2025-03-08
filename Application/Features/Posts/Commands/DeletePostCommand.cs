@@ -37,6 +37,6 @@ public class DeletePostHandler : IRequestHandler<DeletePostCommand, GeneralRespo
         _postRepository.SoftDelete(post);
         await _unitOfWork.SaveChangesAsync();
 
-        return new GeneralResponse(true, $"Post {post.Id} was deleted successfully.");
+        return new GeneralResponse(true, $"Post ID: {post.Id} was deleted successfully.");
     }
 }

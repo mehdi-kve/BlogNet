@@ -39,6 +39,6 @@ public class UpdateCommentHandler : IRequestHandler<UpdateCommentCommand, Genera
         _commentRepository.Update(comment);
         await _unitOfWork.SaveChangesAsync();
 
-        return new GeneralResponse(true, $"Comment {comment.Id} was updated successfully."); ;
+        return new GeneralResponse(true, $"Comment ID: {comment.Id} was updated successfully."); ;
     }
 }
