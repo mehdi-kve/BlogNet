@@ -75,7 +75,7 @@ Follow these steps to set up and run the project locally.
 
 - **.NET 8 SDK**
 - **SQL Server**
-- **Visual Studio 2022 یا Visual Studio**
+- **Visual Studio 2022**
 
 ### Setup Instructions
 
