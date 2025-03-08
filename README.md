@@ -46,7 +46,7 @@ This project follows **Clean Architecture**, which consists of the following lay
 - `POST /api/Post/Create` - Create a new post.
 - `PUT /api/Post/Update/{id}` - Update post details.
 - `DELETE /api/Post/Delete/{id}` - Delete a post.
-- 
+
 ### Post Category
 - `GET /api/PostCategory/GetAll` - Get a list of all post categories.
 - `POST /api/PostCategory/Create` - Create a new category.
