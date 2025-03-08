@@ -31,10 +31,15 @@ public class CreateLikeHandler : IRequestHandler<CreateLikeCommand, GeneralRespo
     public async Task<GeneralResponse> Handle(CreateLikeCommand request, CancellationToken cancellationToken)
     {
         var userId = _userContext.GetCurrentUserId();
-        var post = await _postRepository.GetByIdAsync(request.id);
+        var allPosts = await _postRepository.GetPostByIdWithDetailsAsync(); 
 
+        var post = allPosts.FirstOrDefault(p => p.Id == request.id);
         if (post == null)
             return new GeneralResponse(false, "Post does not exist in database");
+
+        var userLike = post.Likes.FirstOrDefault(l => l.UserId == userId);
+        if (userLike != null)
+            return new GeneralResponse(false, "You have liked this post before.");
 
         var like = new Like
         {

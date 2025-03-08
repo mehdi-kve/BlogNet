@@ -19,11 +19,8 @@ public class GetPostByIdHandler : IRequestHandler<GetPostByIdQuery, PostDTO>
     public async Task<PostDTO> Handle(GetPostByIdQuery request, CancellationToken cancellationToken)
     {
         //var post = await _postRepository.GetByIdAsync(request.id);
-        var posts = await _postRepository
-            .GetAllWithIncludesAsync(p => p.User, p => p.PostCategory, p => p.Comments, p => p.Likes);
-
+        var posts = await _postRepository.GetPostByIdWithDetailsAsync();
         var result = _mapper.Map<PostDTO>(posts.FirstOrDefault(p => p.Id == request.id));
-
         return result ?? throw new Exception("Post not found");
     }
 }

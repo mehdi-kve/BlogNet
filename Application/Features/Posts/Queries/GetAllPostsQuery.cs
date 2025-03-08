@@ -18,9 +18,8 @@ public class GetAllPostsHandler : IRequestHandler<GetAllPostsQuery, List<PostDTO
 
     public async Task<List<PostDTO>> Handle(GetAllPostsQuery request, CancellationToken cancellationToken)
     {
-        var posts = await _postRepository
-            .GetAllWithIncludesAsync(p => p.User, p => p.PostCategory, p => p.Comments, p => p.Likes);
-
-        return _mapper.Map<List<PostDTO>>(posts);
+        var posts = await _postRepository.GetPostByIdWithDetailsAsync();
+        var result = _mapper.Map<List<PostDTO>>(posts);
+        return result;
     }
 }

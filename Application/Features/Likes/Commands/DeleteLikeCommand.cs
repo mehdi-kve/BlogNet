@@ -27,8 +27,7 @@ public class DeleteLikeHandler : IRequestHandler<DeleteLikeCommand, GeneralRespo
     public async Task<GeneralResponse> Handle(DeleteLikeCommand request, CancellationToken cancellationToken)
     {
         var userId = _userContextService.GetCurrentUserId();
-        var allPosts = await _postRepository
-            .GetAllWithIncludesAsync(p => p.Likes);
+        var allPosts = await _postRepository.GetPostByIdWithDetailsAsync();
 
         var post = allPosts.FirstOrDefault(p => p.Id == request.id);
         if (post == null)

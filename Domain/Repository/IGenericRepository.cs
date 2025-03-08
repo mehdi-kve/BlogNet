@@ -12,7 +12,6 @@ namespace Domain.Repository
     {
         Task<T?> GetByIdAsync(int id);
         Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, params Expression<Func<T, object>>[] includes);
-        Task<IEnumerable<T>> GetAllWithIncludesAsync(params Expression<Func<T, object>>[] includes);
         Task AddAsync(T entity);
         void Update(T entity);
         void Delete(T entity);

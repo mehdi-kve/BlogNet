@@ -9,5 +9,6 @@ namespace Domain.Repository
 {
     public interface IPostRepository: IGenericRepository<Post>
     {
+        Task<List<Post>> GetPostByIdWithDetailsAsync();
     }
 }
