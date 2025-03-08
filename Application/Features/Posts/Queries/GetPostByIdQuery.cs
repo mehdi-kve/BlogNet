@@ -1,6 +1,5 @@
 ﻿using Application.DTOs.Response.Posts;
 using AutoMapper;
-using Domain.Entities.Posts;
 using Domain.Repository;
 using MediatR;
 
@@ -20,7 +19,6 @@ public class GetPostByIdHandler : IRequestHandler<GetPostByIdQuery, PostDTO>
     public async Task<PostDTO> Handle(GetPostByIdQuery request, CancellationToken cancellationToken)
     {
         //var post = await _postRepository.GetByIdAsync(request.id);
-
         var posts = await _postRepository
             .GetAllWithIncludesAsync(p => p.User, p => p.PostCategory, p => p.Comments, p => p.Likes);
 

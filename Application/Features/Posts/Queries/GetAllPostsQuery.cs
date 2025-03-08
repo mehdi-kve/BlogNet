@@ -1,6 +1,5 @@
 ﻿using Application.DTOs.Response.Posts;
 using AutoMapper;
-using Domain.Entities.Posts;
 using Domain.Repository;
 using MediatR;
 
